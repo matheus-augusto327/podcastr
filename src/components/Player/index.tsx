@@ -15,9 +15,11 @@ export function Player() {
     episodeList, 
     currentEpisodeIndex, 
     isPlaying,
-    isLooping, 
+    isLooping,
+    isShuffling,
     togglePlay,
     toggleLoop,
+    toggleShuffle,
     setPlayingState,
     playNext,
     playPrevious,
@@ -38,9 +40,6 @@ export function Player() {
   }, [isPlaying])
 
   const episode = episodeList[currentEpisodeIndex]
-
-  console.log(episodeList)
-  console.log(currentEpisodeIndex)
 
   return (
     <div className={styles.playerContainer}>
@@ -95,7 +94,12 @@ export function Player() {
         ) }
 
         <div className={styles.buttons}>
-          <button type="button" disabled={!episode}>
+          <button
+            type="button"
+            disabled={!episode || episodeList.length === 1}
+            onClick={toggleShuffle}
+            className={isShuffling ? styles.isActive : ''}
+          >
             <img src="/shuffle.svg" alt="Embaralhar" />
           </button>
           <button type="button" onClick={playPrevious} disabled={!episode || !hasPrevious}>
